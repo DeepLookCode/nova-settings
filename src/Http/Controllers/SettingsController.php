@@ -51,13 +51,15 @@ class SettingsController extends Controller
             $tempResource =  new \stdClass;
             $field->fill($request, $tempResource);
 
-            if (isset($existingRow)) {
-                $existingRow->update(['value' => $tempResource->{$field->attribute}]);
-            } else {
-                Settings::create([
-                    'key' => $field->attribute,
-                    'value' => $tempResource->{$field->attribute},
-                ]);
+            if (property_exists($tempResource, $field->attribute)) {
+                if (isset($existingRow)) {
+                    $existingRow->update(['value' => $tempResource->{$field->attribute}]);
+                } else {
+                    Settings::create([
+                        'key' => $field->attribute,
+                        'value' => $tempResource->{$field->attribute},
+                    ]);
+                }
             }
         });
 
