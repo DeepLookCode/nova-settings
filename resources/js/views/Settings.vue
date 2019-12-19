@@ -80,7 +80,7 @@ export default {
         this.isUpdating = true;
         const response = await this.updateRequest();
 
-        this.$toasted.show('Settings successfully updated', {
+        this.$toasted.show(this.__('Settings successfully updated'), {
           type: 'success',
         });
 
@@ -96,6 +96,7 @@ export default {
 
         if (error && error.response && error.response.status == 422) {
           this.validationErrors = new Errors(error.response.data.errors);
+          Nova.error(this.__('There was a problem submitting the form.'));
         }
       }
     },
